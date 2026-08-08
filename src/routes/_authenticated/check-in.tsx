@@ -70,7 +70,7 @@ function CheckInPage() {
     queryClient.invalidateQueries();
   };
 
-  if (active) {
+  if (active && !success) {
     return (
       <div className="card-surface mx-auto max-w-lg p-6 text-center">
         <CheckCircle2 className="mx-auto h-10 w-10 text-primary" />

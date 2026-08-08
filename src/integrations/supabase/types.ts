@@ -14,13 +14,212 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      parking_sessions: {
+        Row: {
+          check_in_time: string
+          check_out_time: string | null
+          id: string
+          slot_id: string
+          status: string
+          user_id: string
+          username: string
+          vehicle_type: string
+          zone_id: string
+        }
+        Insert: {
+          check_in_time?: string
+          check_out_time?: string | null
+          id?: string
+          slot_id: string
+          status?: string
+          user_id: string
+          username?: string
+          vehicle_type?: string
+          zone_id: string
+        }
+        Update: {
+          check_in_time?: string
+          check_out_time?: string | null
+          id?: string
+          slot_id?: string
+          status?: string
+          user_id?: string
+          username?: string
+          vehicle_type?: string
+          zone_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parking_sessions_slot_id_fkey"
+            columns: ["slot_id"]
+            isOneToOne: false
+            referencedRelation: "parking_slots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "parking_sessions_zone_id_fkey"
+            columns: ["zone_id"]
+            isOneToOne: false
+            referencedRelation: "parking_zones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      parking_slots: {
+        Row: {
+          id: string
+          slot_number: string
+          status: string
+          zone_id: string
+        }
+        Insert: {
+          id?: string
+          slot_number: string
+          status?: string
+          zone_id: string
+        }
+        Update: {
+          id?: string
+          slot_number?: string
+          status?: string
+          zone_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "parking_slots_zone_id_fkey"
+            columns: ["zone_id"]
+            isOneToOne: false
+            referencedRelation: "parking_zones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      parking_zones: {
+        Row: {
+          available_slots: number
+          created_at: string
+          id: string
+          status: string
+          total_slots: number
+          zone_name: string
+        }
+        Insert: {
+          available_slots?: number
+          created_at?: string
+          id?: string
+          status?: string
+          total_slots?: number
+          zone_name: string
+        }
+        Update: {
+          available_slots?: number
+          created_at?: string
+          id?: string
+          status?: string
+          total_slots?: number
+          zone_name?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          role: string
+          username: string
+          vehicle_type: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          name?: string
+          role?: string
+          username: string
+          vehicle_type?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          role?: string
+          username?: string
+          vehicle_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_in: {
+        Args: { p_username: string; p_vehicle_type: string; p_zone_id: string }
+        Returns: {
+          check_in_time: string
+          check_out_time: string | null
+          id: string
+          slot_id: string
+          status: string
+          user_id: string
+          username: string
+          vehicle_type: string
+          zone_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "parking_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      check_out: {
+        Args: never
+        Returns: {
+          check_in_time: string
+          check_out_time: string | null
+          id: string
+          slot_id: string
+          status: string
+          user_id: string
+          username: string
+          vehicle_type: string
+          zone_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "parking_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never

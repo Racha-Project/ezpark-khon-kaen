@@ -79,19 +79,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ezpark.com — ระบบค้นหาที่จอดรถ ม.ขอนแก่น" },
+      { title: "Ezpark.com — ระบบค้นหาที่จอดรถ มนุษยศาสตร์ฯ ม.ขอนแก่น" },
       {
         name: "description",
         content:
-          "ระบบค้นหาและจัดการพื้นที่จอดรถแบบเรียลไทม์ คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยขอนแก่น",
+          "Ezpark.com ระบบค้นหาและจัดการพื้นที่จอดรถแบบเรียลไทม์ สำหรับนักศึกษาคณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยขอนแก่น",
       },
-      { property: "og:title", content: "Ezpark.com" },
+      { property: "og:title", content: "Ezpark.com — ระบบค้นหาที่จอดรถ มนุษยศาสตร์ฯ ม.ขอนแก่น" },
       {
         property: "og:description",
-        content: "เช็คที่จอดรถว่างแบบเรียลไทม์ พร้อม Check In / Check Out และสถิติการใช้งาน",
+        content: "Ezpark.com ระบบค้นหาและจัดการพื้นที่จอดรถแบบเรียลไทม์ สำหรับนักศึกษาคณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยขอนแก่น",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Ezpark.com — ระบบค้นหาที่จอดรถ มนุษยศาสตร์ฯ ม.ขอนแก่น" },
+      { name: "twitter:description", content: "Ezpark.com ระบบค้นหาและจัดการพื้นที่จอดรถแบบเรียลไทม์ สำหรับนักศึกษาคณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยขอนแก่น" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c88b7635ee6bc52b9fe9882f37e32346/id-preview-b864df46--278c2b7a-86db-4101-9098-f22868574f9d.lovable.app-1786172470331.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c88b7635ee6bc52b9fe9882f37e32346/id-preview-b864df46--278c2b7a-86db-4101-9098-f22868574f9d.lovable.app-1786172470331.png" },
     ],
     links: [
       {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -79,6 +79,39 @@ function ProfilePage() {
     }
   };
 
+  const exportCsv = () => {
+    if (sessions.length === 0) return;
+    const headers = [
+      "Date",
+      "Zone",
+      "Slot",
+      "Vehicle",
+      "Check In",
+      "Check Out",
+      "Duration",
+    ];
+    const esc = (v: string) => `"${v.replace(/"/g, '""')}"`;
+    const rows = sessions.map((s) =>
+      [
+        formatDate(s.check_in_time),
+        zones.find((z) => z.id === s.zone_id)?.zone_name ?? "-",
+        slots.find((sl) => sl.id === s.slot_id)?.slot_number ?? "-",
+        s.vehicle_type === "car" ? "Car" : "Motorcycle",
+        formatTime(s.check_in_time),
+        s.check_out_time ? formatTime(s.check_out_time) : "กำลังจอด",
+        s.check_out_time ? durationText(s.check_in_time, s.check_out_time) : "-",
+      ].map(esc).join(","),
+    );
+    const csv = "\uFEFF" + [headers.map(esc).join(","), ...rows].join("\r\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ezpark-history-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("ดาวน์โหลดไฟล์ CSV เรียบร้อย");
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -137,7 +170,18 @@ function ProfilePage() {
         </section>
 
         <section className="card-surface overflow-x-auto p-5">
-          <h2 className="text-base font-semibold">Parking History</h2>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="text-base font-semibold">Parking History</h2>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={sessions.length === 0}
+              onClick={exportCsv}
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Export CSV
+            </Button>
+          </div>
           {sessions.length === 0 ? (
             <p className="mt-4 text-sm text-muted-foreground">ยังไม่มีประวัติการจอดรถ</p>
           ) : (
